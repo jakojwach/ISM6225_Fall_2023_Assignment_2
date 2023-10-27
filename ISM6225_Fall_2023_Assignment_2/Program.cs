@@ -1,4 +1,4 @@
-﻿/* 
+/* 
  
 YOU ARE NOT ALLOWED TO MODIFY ANY FUNCTION DEFINATION's PROVIDED.
 WRITE YOUR CODE IN THE RESPECTIVE QUESTION FUNCTION BLOCK
@@ -6,6 +6,8 @@ WRITE YOUR CODE IN THE RESPECTIVE QUESTION FUNCTION BLOCK
 
 */
 
+using System.Collections;
+using System.Drawing;
 using System.Text;
 
 namespace ISM6225_Fall_2023_Assignment_2
@@ -112,8 +114,46 @@ namespace ISM6225_Fall_2023_Assignment_2
         {
             try
             {
-                // Write your code here and you can modify the return value according to the requirements
-                return new List<IList<int>>();
+                List<int> upperLimits = new List<int>();
+                List<int> lowerLimits = new List<int>();
+
+                if (lower >= -108 && lower <= upper && upper <= 109)
+                {
+                    lowerLimits.Add(lower);
+                    IList<IList<int>> pairs = new List<IList<int>>();
+
+                    List<int> rangeOfNumbers = new List<int>();
+                    int count = 0;
+                    while (count <= upper)
+                    {
+                        rangeOfNumbers.Add(count);
+                        count++;
+                    }
+
+                    foreach (int i in rangeOfNumbers)
+                    {
+                        if (nums.Contains(i))
+                        {
+                            upperLimits.Add(i - 1);
+                            lowerLimits.Add(i + 1);
+                        }
+                    }
+                    upperLimits.Add(upper);
+
+                    for (int i = 0; i < lowerLimits.Count; i++)
+                    {
+                        // Create a new list to represent the pair
+                        List<int> pair = new List<int> { lowerLimits[i], upperLimits[i] };
+                        pairs.Add(pair);
+                    }
+
+                    return pairs;
+                }
+                else
+                {
+                    return null;
+                }
+
             }
             catch (Exception)
             {
@@ -156,8 +196,45 @@ namespace ISM6225_Fall_2023_Assignment_2
         {
             try
             {
-                // Write your code here and you can modify the return value according to the requirements
-                return s.Length == 0;
+                Dictionary<string, string> bracketPairs = new Dictionary<string, string>
+            {
+                { "[", "]" },
+                { "{", "}" },
+                { "(", ")" }
+                // Add more pairs as needed
+            };
+                bool valid = false;
+                List<string> list = new List<string>();
+
+
+                Stack<string> stack = new Stack<string>();
+                List<char> charList = s.ToCharArray().ToList();
+                List<string> stringList = charList.ConvertAll(charElement => charElement.ToString());
+
+                foreach (string character in stringList)
+                {
+                    if (bracketPairs.ContainsKey(character))
+                    {
+                        stack.Push(character); // Push opening brackets onto the stack
+                    }
+                    else if (bracketPairs.ContainsValue(character))
+                    {
+                        if (stack.Count == 0 || bracketPairs[stack.Pop()] != character)
+                        {
+
+                        }
+                    }
+                }
+
+                if (stack.Count == 0)
+                {
+                    valid = true;
+                }
+                else
+                {
+                    valid = false;
+                }
+                return valid;
             }
             catch (Exception)
             {
@@ -191,8 +268,30 @@ namespace ISM6225_Fall_2023_Assignment_2
         {
             try
             {
-                // Write your code here and you can modify the return value according to the requirements
-                return 1;
+                int profit = 0;
+                List<int> intList = prices.ToList();
+
+
+                foreach (int i in intList)
+                {
+                    int count = (intList.IndexOf(i) + 1);
+                    while (count < intList.Count)
+                    {
+                        if (intList.IndexOf(i) == intList.Count - 1) { break; }
+                        else
+                        {
+                            int p = (intList[count] - i);
+                            if (p > profit)
+                            { profit = p; }
+                            count++;
+                        }
+
+                    }
+
+
+                }
+                Console.WriteLine(profit);
+                return profit;
             }
             catch (Exception)
             {
@@ -229,8 +328,22 @@ namespace ISM6225_Fall_2023_Assignment_2
         {
             try
             {
-                // Write your code here and you can modify the return value according to the requirements
-                return false;
+                string nums = "88";
+                bool found = false;
+                List<char> charList = s.ToCharArray().ToList();
+                List<string> stringList = charList.ConvertAll(charElement => charElement.ToString());
+
+                foreach (string n in stringList)
+                {
+                    if (nums == n)
+                    {
+                        found = true;
+                        break;
+                    }
+
+                }
+
+                return found;
             }
             catch (Exception)
             {
@@ -271,8 +384,24 @@ namespace ISM6225_Fall_2023_Assignment_2
         {
             try
             {
-                // Write your code here and you can modify the return value according to the requirements
-                return 0;
+
+                int noOfGoodFits = 0;
+
+                for (int i = 0; i < nums.Length; i++)
+                {
+                    for (int j = 0; j < nums.Length; j++)
+                    {
+                        if (i < j)
+                        {
+                            if (nums[i] == nums[j])
+                            {
+                                noOfGoodFits++;
+                            }
+                        }
+                    }
+                }
+                Console.WriteLine(noOfGoodFits);
+                return noOfGoodFits;
             }
             catch (Exception)
             {
@@ -321,8 +450,25 @@ namespace ISM6225_Fall_2023_Assignment_2
         {
             try
             {
-                // Write your code here and you can modify the return value according to the requirements
-                return 0;
+                List<int> unique = new List<int>();
+                int finalAnswer = 0;
+
+                foreach (int item in nums)
+                {
+                    if (unique.Contains(item)) { }
+                    else
+                    {
+                        unique.Add(item);
+                    }
+                }
+                unique.Sort((a, b) => -a.CompareTo(b));
+
+                if (unique.Count >= 3) { finalAnswer = unique[2]; }
+                else { finalAnswer = (unique[0]); }
+                {
+
+                }
+                return finalAnswer;
             }
             catch (Exception)
             {
@@ -354,8 +500,21 @@ namespace ISM6225_Fall_2023_Assignment_2
         {
             try
             {
-                // Write your code here and you can modify the return value according to the requirements
-                return new List<string>() { };
+                List<string> possibleStates = new List<string>();
+
+                for (int i = 0; i < currentState.Length - 1; i++)
+                {
+                    if (currentState[i] == '+' && currentState[i + 1] == '+')
+                    {
+                        // Create a new string by flipping "++" to "--"
+                        string nextState = currentState.Substring(0, i) + "--" + currentState.Substring(i + 2);
+
+                        possibleStates.Add(nextState);
+                    }
+                }
+
+                return possibleStates;
+
             }
             catch (Exception)
             {
@@ -383,49 +542,62 @@ namespace ISM6225_Fall_2023_Assignment_2
 
         public static string RemoveVowels(string s)
         {
-            // Write your code here and you can modify the return value according to the requirements
-            return "";
-        }
 
-        /* Inbuilt Functions - Don't Change the below functions */
-        static string ConvertIListToNestedList(IList<IList<int>> input)
-        {
-            StringBuilder sb = new StringBuilder();
 
-            sb.Append("["); // Add the opening square bracket for the outer list
 
-            for (int i = 0; i < input.Count; i++)
+            StringBuilder result = new StringBuilder();
+            foreach (char c in s)
             {
-                IList<int> innerList = input[i];
-                sb.Append("[" + string.Join(",", innerList) + "]");
-
-                // Add a comma unless it's the last inner list
-                if (i < input.Count - 1)
+                if ("aeiouAEIOU".IndexOf(c) == -1)
                 {
-                    sb.Append(",");
+                    result.Append(c);
                 }
             }
-
-            sb.Append("]"); // Add the closing square bracket for the outer list
-
-            return sb.ToString();
-        }
+            return result.ToString();
 
 
-        static string ConvertIListToArray(IList<string> input)
-        {
-            // Create an array to hold the strings in input
-            string[] strArray = new string[input.Count];
 
-            for (int i = 0; i < input.Count; i++)
+
+            /* Inbuilt Functions - Don't Change the below functions */
+            static string ConvertIListToNestedList(IList<IList<int>> input)
             {
-                strArray[i] = "\"" + input[i] + "\""; // Enclose each string in double quotes
+                StringBuilder sb = new StringBuilder();
+
+                sb.Append("["); // Add the opening square bracket for the outer list
+
+                for (int i = 0; i < input.Count; i++)
+                {
+                    IList<int> innerList = input[i];
+                    sb.Append("[" + string.Join(",", innerList) + "]");
+
+                    // Add a comma unless it's the last inner list
+                    if (i < input.Count - 1)
+                    {
+                        sb.Append(",");
+                    }
+                }
+
+                sb.Append("]"); // Add the closing square bracket for the outer list
+
+                return sb.ToString();
             }
 
-            // Join the strings in strArray with commas and enclose them in square brackets
-            string result = "[" + string.Join(",", strArray) + "]";
 
-            return result;
+            static string ConvertIListToArray(IList<string> input)
+            {
+                // Create an array to hold the strings in input
+                string[] strArray = new string[input.Count];
+
+                for (int i = 0; i < input.Count; i++)
+                {
+                    strArray[i] = "\"" + input[i] + "\""; // Enclose each string in double quotes
+                }
+
+                // Join the strings in strArray with commas and enclose them in square brackets
+                string result = "[" + string.Join(",", strArray) + "]";
+
+                return result;
+            }
         }
     }
 }
